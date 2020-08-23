@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/controllers"
 	_ "blog/models"
 	_ "blog/routers"
 	"github.com/astaxie/beego"
@@ -8,6 +9,7 @@ import (
 )
 
 func main() {
+	beego.ErrorController(&controllers.ErrorController{})
 	initTemplate()
 	beego.Run()
 }

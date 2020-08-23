@@ -9,7 +9,7 @@ func init() {
 
     beego.GlobalControllerRouter["blog/controllers:IndexController"] = append(beego.GlobalControllerRouter["blog/controllers:IndexController"],
         beego.ControllerComments{
-            Method: "Index",
+            Method: "GetIndex",
             Router: `/`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
@@ -18,7 +18,7 @@ func init() {
 
     beego.GlobalControllerRouter["blog/controllers:IndexController"] = append(beego.GlobalControllerRouter["blog/controllers:IndexController"],
         beego.ControllerComments{
-            Method: "IndexAbout",
+            Method: "GetAbout",
             Router: `/about`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
@@ -27,7 +27,7 @@ func init() {
 
     beego.GlobalControllerRouter["blog/controllers:IndexController"] = append(beego.GlobalControllerRouter["blog/controllers:IndexController"],
         beego.ControllerComments{
-            Method: "IndexMessage",
+            Method: "GetMessage",
             Router: `/message`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
