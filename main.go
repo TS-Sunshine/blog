@@ -8,7 +8,9 @@ import (
 	"strings"
 )
 
+//入口函数
 func main() {
+
 	beego.ErrorController(&controllers.ErrorController{})
 	initTemplate()
 	beego.Run()
