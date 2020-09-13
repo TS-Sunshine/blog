@@ -25,3 +25,10 @@ func (this *UserController) Login()  {
 	}
 	this.ServeJSON()
 }
+
+// @router /logout [get]
+func (this *UserController) Logout() {
+	this.MustLogin()
+	this.DelSession(SESSION_USER_KEY)
+	this.Redirect("/", 302)
+}

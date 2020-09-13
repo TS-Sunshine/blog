@@ -2,11 +2,14 @@ package controllers
 
 import (
 	"blog/models"
+	"blog/syserror"
 	"errors"
 	"github.com/astaxie/beego"
 )
 
 const SESSION_USER_KEY = "SESSION_USER_KEY"
+
+type H map[string]interface{}
 
 type BaseController struct {
 	beego.Controller
@@ -22,7 +25,7 @@ func (this *BaseController) Prepare() {
 		this.bIsLogin = true
 		this.Data["User"] = this.User
 	}
-	//this.Data["islogin"] = this.bIsLogin
+	this.Data["bLogin"] = this.bIsLogin
 }
 
 func (this *BaseController) Abort500(err error)  {
@@ -36,4 +39,14 @@ func (this *BaseController) GetMustString(key, msg string) string {
 		this.Abort500(errors.New(msg))
 	}
 	return value
+}
+
+func (c *BaseController) MustLogin()  {
+	if !c.bIsLogin {
+		c.Abort500(syserror.NoUserError{})
+	}
+}
+
+func (c *BaseController) JsonOK(msg ,action string)  {
+	
 }
