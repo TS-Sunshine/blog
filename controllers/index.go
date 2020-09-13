@@ -18,3 +18,8 @@ func (this *IndexController) GetMessage() {
 func (this *IndexController) GetAbout()  {
 	this.TplName = "about.html"
 }
+
+// @router /user [get]
+func (this *IndexController) GetUser()  {
+	this.TplName = "user.html"
+}
