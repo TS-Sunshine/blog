@@ -23,3 +23,8 @@ func (this *IndexController) GetAbout()  {
 func (this *IndexController) GetUser()  {
 	this.TplName = "user.html"
 }
+
+// @router /reg [get]
+func (this *IndexController) GetReg()  {
+	this.TplName = "reg.html"
+}

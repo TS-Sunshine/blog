@@ -24,6 +24,7 @@ func init() {
 
 	//同步表结构
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Note{})
 	var count int
 	if err := db.Model(&User{}).Count(&count).Error; err == nil && count == 0 {
 		db.Create(&User{

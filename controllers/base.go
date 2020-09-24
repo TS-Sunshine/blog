@@ -5,11 +5,16 @@ import (
 	"blog/syserror"
 	"errors"
 	"github.com/astaxie/beego"
+	uuid "github.com/satori/go.uuid"
 )
 
 const SESSION_USER_KEY = "SESSION_USER_KEY"
 
 type H map[string]interface{}
+
+type NestPrepare interface {
+	NextPrepare()
+}
 
 type BaseController struct {
 	beego.Controller
@@ -26,6 +31,9 @@ func (this *BaseController) Prepare() {
 		this.Data["User"] = this.User
 	}
 	this.Data["bLogin"] = this.bIsLogin
+	if a, ok := this.AppController.(NestPrepare); ok {
+		a.NextPrepare()
+	}
 }
 
 func (this *BaseController) Abort500(err error)  {
@@ -35,7 +43,7 @@ func (this *BaseController) Abort500(err error)  {
 
 func (this *BaseController) GetMustString(key, msg string) string {
 	value := this.GetString(key)
-	if len(value) == 0 {
+ 	if len(value) == 0 {
 		this.Abort500(errors.New(msg))
 	}
 	return value
@@ -47,6 +55,19 @@ func (c *BaseController) MustLogin()  {
 	}
 }
 
-func (c *BaseController) JsonOK(msg ,action string)  {
-	
+func (this *BaseController) JsonOK(msg ,action string)  {
+	this.Data["json"] = H {
+		"code" : 0,
+		"msg" : msg,
+		"action" : action,
+	}
+	this.ServeJSON()
+}
+
+func (this *BaseController) UUID() string {
+	u := uuid.NewV4()
+	if len(u.String()) <= 0 {
+		this.Abort500(errors.New("系统错误"))
+	}
+	return u.String()
 }
